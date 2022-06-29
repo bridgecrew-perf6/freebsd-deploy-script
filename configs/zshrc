@@ -198,6 +198,7 @@ function cheat {
 
 # other aliases
 alias http='http --verify=no'
+alias cat='bat -p '
 
 ### Fix slowness of pastes with zsh-syntax-highlighting.zsh
 pasteinit() {

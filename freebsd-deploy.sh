@@ -8,7 +8,7 @@ service openssh start
 echo "Done."
 
 echo "Shell..."
-pkg install -y zsh curl git exa autojump fzf cowsay grc
+pkg install -y zsh curl git exa autojump fzf cowsay grc bat htop
 
 curl -o install.sh -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
 chmod +x install.sh
