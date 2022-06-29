@@ -1,15 +1,31 @@
 #!/bin/sh
 
-echo "OpenSSH..."
-pkg install -y openssh-portable
-sysrc openssh_enable="YES"
-sed -i '' 's/#Port 22/Port 22/g' /usr/local/etc/ssh/sshd_config
-service openssh start
-echo "Done."
+AMIROOT=`whoami`
+if [[ "$AMIROOT" == "root" ]]; then
+
+    echo "Timezone..."
+    tzsetup Europe/Bratislava
+    echo "Done."
+    
+    echo "Disable sendmail..."
+    sysrc sendmail_msp_queue_enable=NO
+    sysrc sendmail_submit_enable=NO
+    echo "Done."
+    
+    echo "OpenSSH..."
+    pkg install -y openssh-portable
+    sysrc openssh_enable="YES"
+    sed -i '' 's/#Port 22/Port 22/g' /usr/local/etc/ssh/sshd_config
+    service openssh start
+    echo "Done."
+    
+    echo "Install tools..."
+    pkg install -y zsh curl git exa autojump fzf cowsay grc bat htop
+    echo "Done."
+
+fi
 
 echo "Shell..."
-pkg install -y zsh curl git exa autojump fzf cowsay grc bat htop
-
 curl -o install.sh -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
 chmod +x install.sh
 ./install.sh
@@ -36,3 +52,4 @@ chmod 644 $HOME/.vimrc
 curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 vim +PlugInstall +qall
 echo "Done."
+
